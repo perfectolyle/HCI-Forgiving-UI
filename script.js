@@ -9,6 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const viewTrash = document.getElementById('view-trash');
     const trashBadge = document.getElementById('trash-badge');
     const trashList = document.getElementById('trash-list');
+    
+    // Mobile Sidebar Elements
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const leftSidebar = document.querySelector('.left-sidebar');
 
     // --- Create Post Elements (Phase 2 - Good Design) ---
     const postInput = document.getElementById('post-input');
@@ -71,6 +75,18 @@ document.addEventListener('DOMContentLoaded', () => {
         viewPhase1.classList.add('hidden');
         viewPhase2.classList.add('hidden');
         viewTrash.classList.add('hidden');
+        
+        // Hide sidebar on mobile after clicking
+        if (window.innerWidth <= 768) {
+            leftSidebar.classList.remove('show');
+        }
+    }
+
+    // Toggle menu button for mobile
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', () => {
+            leftSidebar.classList.toggle('show');
+        });
     }
 
     navPhase1.addEventListener('click', () => {

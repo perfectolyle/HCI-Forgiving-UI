@@ -651,16 +651,45 @@ body {
 
 @media (max-width: 768px) {
     .container { flex-direction: column; padding-top: 56px; }
+    
+    .mobile-hide { display: none !important; }
+    .mobile-show { display: flex !important; }
+
     .left-sidebar { 
         width: 100%; 
-        height: auto; 
-        position: static; 
+        height: calc(100vh - 56px);
+        position: fixed; 
+        top: 56px;
+        left: -100%;
+        background-color: var(--fb-bg);
+        z-index: 1000;
         padding: 16px; 
+        transition: left 0.3s ease;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
     }
+    .left-sidebar.show {
+        left: 0;
+    }
+    
     .feed { width: 100%; min-width: unset; max-width: 100%; padding: 0 8px; }
     .nav-center { display: none; } /* Simplify top nav */
-    .nav-left { flex: 1; }
-    .search-bar { width: 100%; max-width: 300px; }
+    .nav-left { flex: 1; margin-right: 12px; }
+    .search-bar { width: 100%; max-width: 100%; }
     .search-bar input { width: 100%; }
+    
+    /* Make Trash Bin Responsive */
+    .trashed-post {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .trashed-post-text {
+        white-space: normal;
+        max-width: 100%;
+        word-break: break-word;
+    }
+    .btn-restore {
+        width: 100%;
+    }
 }
 
