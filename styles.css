@@ -634,6 +634,23 @@ body {
     display: block;
 }
 
+/* Post Inline Editing */
+.edit-textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 8px;
+    border: 1px solid var(--fb-border);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+    resize: vertical;
+}
+.edit-textarea:focus {
+    outline: none;
+    border-color: var(--fb-blue);
+    box-shadow: 0 0 0 2px #E8F4FD;
+}
+
 .splash-header {
     padding: 20px;
     text-align: center;

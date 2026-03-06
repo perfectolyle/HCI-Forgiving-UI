@@ -243,7 +243,55 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast("Post Saved into your collection!", true);
     };
     window.mockEdit = function() {
-        showToast("Edit mode triggered (Mock).", true);
+        showToast("Error: Edit action is unavailable or broken in this design.", false);
+    };
+    window.editPost = function(postId) {
+        const postElement = document.getElementById(postId);
+        if (!postElement) return;
+
+        const contentDiv = postElement.querySelector('.post-content');
+        if (contentDiv.classList.contains('is-editing')) return;
+        contentDiv.classList.add('is-editing');
+
+        const postObj = posts.find(p => p.id === postId);
+        // Fallback to textContent if post object isn't found
+        const currentText = postObj ? postObj.text : contentDiv.textContent.trim();
+
+        const inputArea = document.createElement('textarea');
+        inputArea.className = 'edit-textarea';
+        inputArea.value = currentText;
+        
+        const saveBtn = document.createElement('button');
+        saveBtn.className = 'btn-primary';
+        saveBtn.textContent = 'Save Edit';
+        saveBtn.style.marginTop = '8px';
+        saveBtn.style.padding = '6px 12px';
+
+        saveBtn.onclick = function() {
+            const newText = inputArea.value.trim();
+            if (postObj) postObj.text = newText;
+            contentDiv.innerHTML = newText;
+            contentDiv.classList.remove('is-editing');
+            showToast("Post successfully updated!", true);
+        };
+
+        const cancelBtn = document.createElement('button');
+        cancelBtn.className = 'btn-safe';
+        cancelBtn.textContent = 'Cancel';
+        cancelBtn.style.marginTop = '8px';
+        cancelBtn.style.marginLeft = '8px';
+        cancelBtn.style.padding = '6px 12px';
+
+        cancelBtn.onclick = function() {
+            contentDiv.innerHTML = currentText;
+            contentDiv.classList.remove('is-editing');
+        };
+
+        contentDiv.innerHTML = '';
+        contentDiv.appendChild(inputArea);
+        contentDiv.appendChild(saveBtn);
+        contentDiv.appendChild(cancelBtn);
+        inputArea.focus();
     };
     window.mockLike = function() {
         showToast("You liked this post!", true);
@@ -416,7 +464,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${imageHtml}
                 <div class="post-actions good-actions">
                     <div class="safe-actions">
-                        <button class="btn-safe" onclick="window.mockEdit()"><ion-icon name="create"></ion-icon> Edit</button>
+                        <button class="btn-safe" onclick="window.editPost('${id}')"><ion-icon name="create"></ion-icon> Edit</button>
                         <button class="btn-safe" onclick="window.mockSave()"><ion-icon name="bookmark"></ion-icon> Save</button>
                     </div>
                     <div class="danger-actions">
