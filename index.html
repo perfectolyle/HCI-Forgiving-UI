@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Forgiving Delete Lab</title>
+    <!-- Modern web font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Icons -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo">
+        <ion-icon name="shield-checkmark"></ion-icon>
+        <span>SafeUI Lab</span>
+      </div>
+      <nav>
+        <button class="nav-item active" id="nav-dashboard">
+          <ion-icon name="grid"></ion-icon>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-item" id="nav-trash">
+          <ion-icon name="trash"></ion-icon>
+          <span>Recently Deleted</span>
+          <div class="badge hidden" id="trash-badge">0</div>
+        </button>
+      </nav>
+      <div class="lab-info">
+        <h4>HCI Lab Activity</h4>
+        <p>The "Forgiving Delete" Redesign</p>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <!-- DASHBOARD VIEW -->
+      <section id="view-dashboard" class="view active">
+        <header>
+          <h1>Manage Posts</h1>
+          <p>
+            Learn and observe the differences between error-prone UX and
+            forgiving HCI design.
+          </p>
+        </header>
+
+        <!-- PHASE 1: THE BAD DESIGN -->
+        <div class="glass-panel">
+          <div class="panel-header">
+            <span class="phase-tag bad">Phase 1: Recognition</span>
+            <h2>The "Bad" Design (Error-Prone)</h2>
+            <p>
+              Buttons look identical and are placed unsafely next to each other.
+              Slips happen easily here.
+            </p>
+          </div>
+
+          <div class="post-card bad-card">
+            <div class="post-content">
+              <h3>My Summer Vacation</h3>
+              <p>Had a wonderful time at the beach!</p>
+            </div>
+            <!-- Bad Design Action Buttons -->
+            <div class="bad-actions">
+              <button class="btn-bad">
+                <ion-icon name="bookmark-outline"></ion-icon> Save
+              </button>
+              <button class="btn-bad">
+                <ion-icon name="create-outline"></ion-icon> Edit
+              </button>
+              <button class="btn-bad action-fail">
+                <ion-icon name="close-outline"></ion-icon> Delete
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE 2, 3, 4: THE REDESIGN -->
+        <div class="glass-panel mt-8">
+          <div class="panel-header">
+            <span class="phase-tag good">Phase 2: Prevention & Intention</span>
+            <h2>The "Forgiving" Redesign</h2>
+            <p>
+              Visual Distinction, spacing, and safeguards added. Try deleting
+              this post.
+            </p>
+          </div>
+
+          <div id="good-post-container">
+            <div class="post-card good-card" id="good-post">
+              <div class="post-content">
+                <h3>Important Project Update</h3>
+                <p>Here are the latest statistics for our quarterly goals.</p>
+              </div>
+              <div class="good-actions">
+                <div class="safe-actions">
+                  <button class="btn-primary">
+                    <ion-icon name="create"></ion-icon> Edit Post
+                  </button>
+                  <button class="btn-secondary">
+                    <ion-icon name="bookmark"></ion-icon> Save Draft
+                  </button>
+                </div>
+                <!-- Phase 2: Visual Distinction (Spacing, Color, Icon) -->
+                <div class="danger-actions">
+                  <button class="btn-danger" id="init-delete-btn">
+                    <ion-icon name="trash"></ion-icon> Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Placeholder when good post is deleted -->
+          <div id="post-deleted-msg" class="empty-state hidden">
+            <ion-icon name="checkmark-circle"></ion-icon>
+            <h3>Post safely removed</h3>
+            <p>It has been moved to the Trash Can.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TRASH CAN VIEW -->
+      <section id="view-trash" class="view hidden">
+        <header>
+          <div class="header-with-tag">
+            <h1>Recently Deleted</h1>
+            <span class="phase-tag recovery">Phase 3: Reversibility</span>
+          </div>
+          <!-- Phase 3: Communication -->
+          <p class="warning-text">
+            Items in the Trash Can will be permanently deleted in
+            <strong>30 days</strong>.
+          </p>
+        </header>
+
+        <div class="glass-panel">
+          <div id="trash-list">
+            <!-- Javascript will populate this -->
+            <div class="empty-state">
+              <ion-icon name="folder-open"></ion-icon>
+              <h3>Trash is empty</h3>
+              <p>No recently deleted posts found.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- PHASE 4: THE CONTENT CONSTRAINT DIALOG (MODAL) -->
+    <div class="modal-overlay hidden" id="delete-modal">
+      <div class="modal-content">
+        <div class="modal-icon">
+          <ion-icon name="warning"></ion-icon>
+        </div>
+        <h2>Delete this post?</h2>
+        <p>
+          This post will be moved to the Trash Can. You can restore it anytime
+          within the next 30 days.
+        </p>
+
+        <div class="constraint-container">
+          <label for="delete-confirm-input"
+            >To confirm, type <strong>DELETE</strong> below:</label
+          >
+          <input
+            type="text"
+            id="delete-confirm-input"
+            placeholder="Type DELETE here..."
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-secondary" id="cancel-delete-btn">Cancel</button>
+          <button
+            class="btn-danger-solid disabled"
+            id="confirm-delete-btn"
+            disabled
+          >
+            Move to Trash
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden">
+      <ion-icon name="information-circle"></ion-icon>
+      <span id="toast-msg">Action completed.</span>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
