@@ -92,32 +92,64 @@
                     <p style="color: var(--fb-text-secondary); font-size: 14px;">Observe the error-prone design below. Buttons are clustered, identically styled, and dangerous actions happen instantly without warning.</p>
                 </div>
                 
-                <div class="post card bad-design-post">
-                    <div class="lab-tag bad">Phase 1: Bad Design (Error-Prone)</div>
-                    <div class="post-header">
-                        <img src="https://ui-avatars.com/api/?name=Jane&background=E41E3F&color=fff" alt="Profile">
-                        <div class="post-info">
-                            <h4>Jane Doe</h4>
-                            <span>2 hrs · <ion-icon name="globe"></ion-icon></span>
+                <!-- CREATE POST P1 -->
+                <div class="create-post card">
+                    <div class="create-post-top">
+                        <img src="https://ui-avatars.com/api/?name=User&background=1877F2&color=fff" alt="Profile">
+                        <input type="text" id="post-input-bad" placeholder="What's on your mind, User?" autocomplete="off">
+                    </div>
+                    
+                    <div id="image-preview-container-bad" class="image-preview-container hidden">
+                        <img id="image-preview-bad" class="image-preview" src="" alt="Preview">
+                        <button id="remove-image-btn-bad" class="remove-image-btn"><ion-icon name="close"></ion-icon></button>
+                    </div>
+
+                    <div class="create-post-bottom">
+                        <div class="action-btn" onclick="window.mockUnavailable('Live Video')">
+                            <ion-icon name="videocam" style="color: #E41E3F;"></ion-icon> Live Video
+                        </div>
+                        <div class="action-btn" id="photo-video-btn-bad">
+                            <ion-icon name="images" style="color: #45BD62;"></ion-icon> Photo/video
+                            <input type="file" id="image-upload-bad" accept="image/*" class="hidden">
+                        </div>
+                        <div class="action-btn" onclick="window.mockUnavailable('Feeling/activity')">
+                            <ion-icon name="happy" style="color: #F7B928;"></ion-icon> Feeling/activity
                         </div>
                     </div>
-                    <div class="post-content">
-                        Hey everyone! Just a reminder that our meeting is at 3 PM today. 📅 Don't miss it!
-                    </div>
-                    <div class="post-image">
-                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&auto=format&fit=crop&q=60" alt="Meeting">
-                    </div>
                     
-                    <div class="post-actions bad-actions">
-                        <button class="btn-bad" onclick="window.mockSave()"><ion-icon name="bookmark-outline"></ion-icon> Save</button>
-                        <button class="btn-bad" onclick="window.mockEdit()"><ion-icon name="create-outline"></ion-icon> Edit</button>
-                        <button class="btn-bad" onclick="window.mockBadDelete()"><ion-icon name="close-outline"></ion-icon> Delete</button>
+                    <div class="post-submit-container hidden" id="post-submit-container-bad">
+                        <button class="btn-primary full-width" id="create-post-btn-bad">Post</button>
                     </div>
-                    
-                    <div class="post-footer">
-                        <div class="footer-btn" onclick="window.mockLike()"><ion-icon name="thumbs-up-outline"></ion-icon> Like</div>
-                        <div class="footer-btn" onclick="window.mockComment()"><ion-icon name="chatbubble-outline"></ion-icon> Comment</div>
-                        <div class="footer-btn" onclick="window.mockShare()"><ion-icon name="arrow-redo-outline"></ion-icon> Share</div>
+                </div>
+
+                <div id="posts-container-bad">
+                    <div class="post card bad-design-post">
+                        <div class="lab-tag bad">Phase 1: Bad Design (Error-Prone)</div>
+                        <div class="post-header">
+                            <img src="https://ui-avatars.com/api/?name=Jane&background=E41E3F&color=fff" alt="Profile">
+                            <div class="post-info">
+                                <h4>Jane Doe</h4>
+                                <span>2 hrs · <ion-icon name="globe"></ion-icon></span>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            Hey everyone! Just a reminder that our meeting is at 3 PM today. 📅 Don't miss it!
+                        </div>
+                        <div class="post-image">
+                            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&auto=format&fit=crop&q=60" alt="Meeting">
+                        </div>
+                        
+                        <div class="post-actions bad-actions">
+                            <button class="btn-bad" onclick="window.mockSave()"><ion-icon name="bookmark-outline"></ion-icon> Save</button>
+                            <button class="btn-bad" onclick="window.mockEdit()"><ion-icon name="create-outline"></ion-icon> Edit</button>
+                            <button class="btn-bad" onclick="window.mockBadDelete(this)"><ion-icon name="close-outline"></ion-icon> Delete</button>
+                        </div>
+                        
+                        <div class="post-footer">
+                            <div class="footer-btn" onclick="window.mockLike()"><ion-icon name="thumbs-up-outline"></ion-icon> Like</div>
+                            <div class="footer-btn" onclick="window.mockComment()"><ion-icon name="chatbubble-outline"></ion-icon> Comment</div>
+                            <div class="footer-btn" onclick="window.mockShare()"><ion-icon name="arrow-redo-outline"></ion-icon> Share</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -132,10 +164,9 @@
                         <input type="text" id="post-input" placeholder="What's on your mind, User?" autocomplete="off">
                     </div>
                     
-                    <!-- NEW: IMAGE UPLOAD PREVIEW -->
-                    <div id="image-preview-container" class="hidden">
-                        <img id="image-preview" src="" alt="Preview">
-                        <button id="remove-image-btn"><ion-icon name="close"></ion-icon></button>
+                    <div id="image-preview-container" class="image-preview-container hidden">
+                        <img id="image-preview" class="image-preview" src="" alt="Preview">
+                        <button id="remove-image-btn" class="remove-image-btn"><ion-icon name="close"></ion-icon></button>
                     </div>
 
                     <div class="create-post-bottom">

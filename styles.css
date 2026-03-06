@@ -365,12 +365,16 @@ body {
 
 /* Phase 1: Bad Design */
 .bad-actions {
-    gap: 0; /* Tight spacing */
+    display: flex;
+    justify-content: flex-end; /* Group them to the right to make them closely packed */
+    gap: 0; 
     background-color: #FDFDFD;
+    padding: 12px 16px;
+    border-top: 1px solid var(--fb-border);
+    border-bottom: 1px solid var(--fb-border);
 }
 .btn-bad {
-    flex: 1;
-    padding: 8px;
+    padding: 6px 12px;
     border: 1px solid var(--fb-border);
     background-color: var(--fb-white);
     color: var(--fb-text-primary);
@@ -380,6 +384,7 @@ body {
     gap: 4px;
     font-size: 14px;
     cursor: pointer;
+    margin-right: -1px; /* overlap borders */
 }
 .btn-bad:hover { background-color: var(--fb-hover); }
 
@@ -586,21 +591,21 @@ body {
 }
 
 /* Image Preview Area */
-#image-preview-container {
+.image-preview-container {
     position: relative;
     margin: 10px 16px;
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid var(--fb-border);
 }
-#image-preview {
+.image-preview {
     width: 100%;
     max-height: 400px;
     object-fit: contain;
     background-color: #000;
     display: block;
 }
-#remove-image-btn {
+.remove-image-btn {
     position: absolute;
     top: 8px;
     right: 8px;
@@ -616,7 +621,7 @@ body {
     font-size: 20px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
-#remove-image-btn:hover { background: #fff; }
+.remove-image-btn:hover { background: #fff; }
 
 .post-image {
     width: 100%;
@@ -636,3 +641,26 @@ body {
     border: 1px solid #E41E3F;
     margin-bottom: 16px;
 }
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 1100px) {
+    .right-sidebar { display: none; }
+    .feed { width: 65%; min-width: unset; }
+    .left-sidebar { width: 35%; min-width: unset; }
+}
+
+@media (max-width: 768px) {
+    .container { flex-direction: column; padding-top: 56px; }
+    .left-sidebar { 
+        width: 100%; 
+        height: auto; 
+        position: static; 
+        padding: 16px; 
+    }
+    .feed { width: 100%; min-width: unset; max-width: 100%; padding: 0 8px; }
+    .nav-center { display: none; } /* Simplify top nav */
+    .nav-left { flex: 1; }
+    .search-bar { width: 100%; max-width: 300px; }
+    .search-bar input { width: 100%; }
+}
+

@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // View Navigation
+    // --- View Navigation Objects ---
     const navPhase1 = document.getElementById('nav-phase1');
     const navPhase2 = document.getElementById('nav-phase2');
     const navTrash = document.getElementById('nav-trash');
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const trashBadge = document.getElementById('trash-badge');
     const trashList = document.getElementById('trash-list');
 
-    // Create Post Elements
+    // --- Create Post Elements (Phase 2 - Good Design) ---
     const postInput = document.getElementById('post-input');
     const createPostBtn = document.getElementById('create-post-btn');
     const postSubmitContainer = document.getElementById('post-submit-container');
@@ -20,19 +20,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const imagePreviewContainer = document.getElementById('image-preview-container');
     const imagePreview = document.getElementById('image-preview');
     const removeImageBtn = document.getElementById('remove-image-btn');
+
+    // --- Create Post Elements (Phase 1 - Bad Design) ---
+    const postInputBad = document.getElementById('post-input-bad');
+    const createPostBtnBad = document.getElementById('create-post-btn-bad');
+    const postSubmitContainerBad = document.getElementById('post-submit-container-bad');
+    const postsContainerBad = document.getElementById('posts-container-bad');
+    const photoVideoBtnBad = document.getElementById('photo-video-btn-bad');
+    const imageUploadBad = document.getElementById('image-upload-bad');
+    const imagePreviewContainerBad = document.getElementById('image-preview-container-bad');
+    const imagePreviewBad = document.getElementById('image-preview-bad');
+    const removeImageBtnBad = document.getElementById('remove-image-btn-bad');
     
-    // Modal
+    // --- Modal Elements ---
     const deleteModal = document.getElementById('delete-modal');
     const closeModalIcon = document.getElementById('close-modal-icon');
     const confirmInput = document.getElementById('delete-confirm-input');
     const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
     const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
     
-    // Toast
+    // --- Toast Element ---
     const toast = document.getElementById('toast');
     const toastMsg = document.getElementById('toast-msg');
 
-    // State Variables
+    // --- State Variables ---
     let posts = [
         { 
             id: 'post-1', 
@@ -44,14 +55,16 @@ document.addEventListener('DOMContentLoaded', () => {
     let trashedPosts = [];
     let postToDeleteId = null;
     let currentImageSrc = null;
+    let currentImageSrcBad = null;
 
-    // --- Navigation Logic ---
+    // ==========================================
+    // NAVIGATION LOGIC
+    // ==========================================
     function resetNav() {
         navPhase1.style.backgroundColor = 'transparent';
         navPhase2.style.backgroundColor = 'transparent';
         navTrash.style.backgroundColor = 'transparent';
         
-        // Remove style class to properly reset
         navPhase1.classList.remove('active-nav');
         navPhase2.classList.remove('active-nav');
         
@@ -79,10 +92,10 @@ document.addEventListener('DOMContentLoaded', () => {
         renderTrash();
     });
 
-    // --- Image Upload Logic ---
-    photoVideoBtn.addEventListener('click', () => {
-        imageUpload.click();
-    });
+    // ==========================================
+    // IMAGE UPLOAD LOGIC (PHASE 2 - GOOD)
+    // ==========================================
+    photoVideoBtn.addEventListener('click', () => { imageUpload.click(); });
 
     imageUpload.addEventListener('change', (e) => {
         const file = e.target.files[0];
@@ -108,43 +121,98 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Create Post ---
+    // ==========================================
+    // IMAGE UPLOAD LOGIC (PHASE 1 - BAD)
+    // ==========================================
+    photoVideoBtnBad.addEventListener('click', () => { imageUploadBad.click(); });
+
+    imageUploadBad.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                currentImageSrcBad = event.target.result;
+                imagePreviewBad.src = currentImageSrcBad;
+                imagePreviewContainerBad.classList.remove('hidden');
+                postSubmitContainerBad.classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    removeImageBtnBad.addEventListener('click', () => {
+        currentImageSrcBad = null;
+        imagePreviewBad.src = '';
+        imagePreviewContainerBad.classList.add('hidden');
+        imageUploadBad.value = '';
+        if (postInputBad.value.trim() === '') {
+            postSubmitContainerBad.classList.add('hidden');
+        }
+    });
+
+    // ==========================================
+    // CREATE POST LOGIC (PHASE 2 - GOOD)
+    // ==========================================
     postInput.addEventListener('focus', () => {
         postSubmitContainer.classList.remove('hidden');
     });
 
     createPostBtn.addEventListener('click', () => {
         const text = postInput.value.trim();
-        // A post should have either text or an image
         if (text || currentImageSrc) {
             const newPostId = 'post-' + Date.now();
             const newPost = { id: newPostId, text: text, date: 'Just now', image: currentImageSrc };
-            posts.unshift(newPost); // Add to beginning
+            posts.unshift(newPost); // Abstract data structure array
             
-            // Create DOM element
-            const postHTML = createPostElement(newPostId, text, currentImageSrc);
+            const postHTML = createGoodPostElement(newPostId, text, currentImageSrc);
             postsContainer.insertAdjacentHTML('afterbegin', postHTML);
             
-            // Attach delete listener to new button
             const deleteBtn = document.querySelector(`.init-delete-btn[data-post-id="${newPostId}"]`);
             if (deleteBtn) {
                 deleteBtn.addEventListener('click', () => openDeleteModal(newPostId));
             }
 
+            // Cleanup Mode
             postInput.value = '';
-            
-            // Revert state
             currentImageSrc = null;
             imagePreview.src = '';
             imagePreviewContainer.classList.add('hidden');
             imageUpload.value = '';
             postSubmitContainer.classList.add('hidden');
             
-            showToast('Post created successfully! You can test deleting it.', true);
+            showToast('Post created successfully! You can gracefully test deleting it.', true);
         }
     });
 
-    // --- Initial Event Listeners for existing posts ---
+    // ==========================================
+    // CREATE POST LOGIC (PHASE 1 - BAD)
+    // ==========================================
+    postInputBad.addEventListener('focus', () => {
+        postSubmitContainerBad.classList.remove('hidden');
+    });
+
+    createPostBtnBad.addEventListener('click', () => {
+        const text = postInputBad.value.trim();
+        if (text || currentImageSrcBad) {
+            const newPostId = 'bad-post-' + Date.now();
+            // Note: We don't push Phase 1 bad posts to the "posts" logic array because they are meant to be instantly destroyed without recovery.
+            
+            const postHTML = createBadPostElement(newPostId, text, currentImageSrcBad);
+            postsContainerBad.insertAdjacentHTML('afterbegin', postHTML);
+            
+            // Cleanup Mode
+            postInputBad.value = '';
+            currentImageSrcBad = null;
+            imagePreviewBad.src = '';
+            imagePreviewContainerBad.classList.add('hidden');
+            imageUploadBad.value = '';
+            postSubmitContainerBad.classList.add('hidden');
+            
+            showToast('Post created successfully! Try deleting it to see what happens.', true);
+        }
+    });
+
+    // --- Initial Event Listeners for existing good posts ---
     document.querySelectorAll('.init-delete-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const postId = e.currentTarget.getAttribute('data-post-id');
@@ -152,7 +220,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Global Mocks for Feed Buttons ---
+    // ==========================================
+    // MOCK INTERACTIONS
+    // ==========================================
     window.mockSave = function() {
         showToast("Post Saved into your collection!", true);
     };
@@ -171,13 +241,16 @@ document.addEventListener('DOMContentLoaded', () => {
     window.mockUnavailable = function(feature) {
         showToast(feature + " is disabled for this lab context.");
     };
-    window.mockBadDelete = function() {
-        showToast("Oops! Direct delete clicked. Item instantly removed!");
-        const badPost = document.querySelector(".bad-design-post");
-        if (badPost) badPost.style.display = "none";
+    window.mockBadDelete = function(element) {
+        showToast("Oops! Direct delete clicked. Item instantly removed from database!");
+        // Instantly destroy the DOM element representing the bad design delete constraint
+        const postElement = element.closest('.post');
+        if (postElement) postElement.remove();
     };
 
-    // --- Modal Logic ---
+    // ==========================================
+    // MODAL LOGIC (GOOD DESIGN RECOVERY)
+    // ==========================================
     function openDeleteModal(postId) {
         postToDeleteId = postId;
         deleteModal.classList.remove('hidden');
@@ -208,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
     confirmDeleteBtn.addEventListener('click', () => {
         if (confirmInput.value !== 'DELETE' || !postToDeleteId) return;
 
-        // Find and move to trash
+        // Find and move to trash logic
         const postIndex = posts.findIndex(p => p.id === postToDeleteId);
         if (postIndex > -1) {
             trashedPosts.push(posts[postIndex]);
@@ -226,7 +299,9 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast("Post moved to the Trash Can safely.");
     });
 
-    // --- Trash Logic ---
+    // ==========================================
+    // TRASH CAN LOGIC
+    // ==========================================
     function renderTrashBadge() {
         if (trashedPosts.length > 0) {
             trashBadge.textContent = trashedPosts.length;
@@ -242,7 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="card empty-state">
                     <ion-icon name="trash-outline"></ion-icon>
                     <h3>No recently deleted posts</h3>
-                    <p>When you delete a post, it will appear here so you can restore it if safely needed.</p>
+                    <p>When you delete a Phase 2 post, it will appear here so you can restore it if safely needed.</p>
                 </div>
             `;
             return;
@@ -274,9 +349,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const index = trashedPosts.findIndex(p => p.id === postId);
         if (index > -1) {
             const restoredPost = trashedPosts.splice(index, 1)[0];
-            posts.push(restoredPost); // Put back to logic array
+            posts.push(restoredPost); 
             
-            // Un-hide in feed
             const postElement = document.getElementById(postId);
             if (postElement) {
                 postElement.classList.remove('hidden');
@@ -288,7 +362,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // --- Toast ---
     function showToast(message, isSuccess = false) {
         toastMsg.textContent = message;
         
@@ -304,8 +377,10 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => toast.classList.add('hidden'), 3500);
     }
 
-    // --- Helper HTML Builder ---
-    function createPostElement(id, text, imgSrc) {
+    // ==========================================
+    // HTML GENERATORS
+    // ==========================================
+    function createGoodPostElement(id, text, imgSrc) {
         let imageHtml = '';
         if (imgSrc) {
             imageHtml = `<div class="post-image"><img src="${imgSrc}" alt="Uploaded"></div>`;
@@ -321,9 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span>Just now · <ion-icon name="globe"></ion-icon></span>
                     </div>
                 </div>
-                <div class="post-content">
-                    ${text}
-                </div>
+                <div class="post-content">${text}</div>
                 ${imageHtml}
                 <div class="post-actions good-actions">
                     <div class="safe-actions">
@@ -333,6 +406,38 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="danger-actions">
                         <button class="btn-danger init-delete-btn" data-post-id="${id}"><ion-icon name="trash"></ion-icon> Delete</button>
                     </div>
+                </div>
+                <div class="post-footer">
+                    <div class="footer-btn" onclick="window.mockLike()"><ion-icon name="thumbs-up-outline"></ion-icon> Like</div>
+                    <div class="footer-btn" onclick="window.mockComment()"><ion-icon name="chatbubble-outline"></ion-icon> Comment</div>
+                    <div class="footer-btn" onclick="window.mockShare()"><ion-icon name="arrow-redo-outline"></ion-icon> Share</div>
+                </div>
+            </div>
+        `;
+    }
+
+    function createBadPostElement(id, text, imgSrc) {
+        let imageHtml = '';
+        if (imgSrc) {
+            imageHtml = `<div class="post-image"><img src="${imgSrc}" alt="Uploaded"></div>`;
+        }
+
+        return `
+            <div class="post card bad-design-post" id="${id}">
+                <div class="lab-tag bad">Phase 1: Bad Design (Error-Prone)</div>
+                <div class="post-header">
+                    <img src="https://ui-avatars.com/api/?name=User&background=E41E3F&color=fff" alt="Profile">
+                    <div class="post-info">
+                        <h4>User Name</h4>
+                        <span>Just now · <ion-icon name="globe"></ion-icon></span>
+                    </div>
+                </div>
+                <div class="post-content">${text}</div>
+                ${imageHtml}
+                <div class="post-actions bad-actions">
+                    <button class="btn-bad" onclick="window.mockSave()"><ion-icon name="bookmark-outline"></ion-icon> Save</button>
+                    <button class="btn-bad" onclick="window.mockEdit()"><ion-icon name="create-outline"></ion-icon> Edit</button>
+                    <button class="btn-bad" onclick="window.mockBadDelete(this)"><ion-icon name="close-outline"></ion-icon> Delete</button>
                 </div>
                 <div class="post-footer">
                     <div class="footer-btn" onclick="window.mockLike()"><ion-icon name="thumbs-up-outline"></ion-icon> Like</div>
