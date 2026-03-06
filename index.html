@@ -1,210 +1,234 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Forgiving Delete Lab</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook - Forgiving Delete Lab</title>
     <!-- Modern web font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Icons -->
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-    ></script>
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="logo">
-        <ion-icon name="shield-checkmark"></ion-icon>
-        <span>SafeUI Lab</span>
-      </div>
-      <nav>
-        <button class="nav-item active" id="nav-dashboard">
-          <ion-icon name="grid"></ion-icon>
-          <span>Dashboard</span>
-        </button>
-        <button class="nav-item" id="nav-trash">
-          <ion-icon name="trash"></ion-icon>
-          <span>Recently Deleted</span>
-          <div class="badge hidden" id="trash-badge">0</div>
-        </button>
-      </nav>
-      <div class="lab-info">
-        <h4>HCI Lab Activity</h4>
-        <p>The "Forgiving Delete" Redesign</p>
-      </div>
-    </aside>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-    <!-- MAIN CONTENT -->
-    <main class="main-content">
-      <!-- DASHBOARD VIEW -->
-      <section id="view-dashboard" class="view active">
-        <header>
-          <h1>Manage Posts</h1>
-          <p>
-            Learn and observe the differences between error-prone UX and
-            forgiving HCI design.
-          </p>
-        </header>
-
-        <!-- PHASE 1: THE BAD DESIGN -->
-        <div class="glass-panel">
-          <div class="panel-header">
-            <span class="phase-tag bad">Phase 1: Recognition</span>
-            <h2>The "Bad" Design (Error-Prone)</h2>
-            <p>
-              Buttons look identical and are placed unsafely next to each other.
-              Slips happen easily here.
-            </p>
-          </div>
-
-          <div class="post-card bad-card">
-            <div class="post-content">
-              <h3>My Summer Vacation</h3>
-              <p>Had a wonderful time at the beach!</p>
+    <!-- TOP NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="fb-logo">
+                <ion-icon name="logo-facebook"></ion-icon>
             </div>
-            <!-- Bad Design Action Buttons -->
-            <div class="bad-actions">
-              <button class="btn-bad">
-                <ion-icon name="bookmark-outline"></ion-icon> Save
-              </button>
-              <button class="btn-bad">
-                <ion-icon name="create-outline"></ion-icon> Edit
-              </button>
-              <button class="btn-bad action-fail">
-                <ion-icon name="close-outline"></ion-icon> Delete
-              </button>
+            <div class="search-bar">
+                <ion-icon name="search-outline"></ion-icon>
+                <input type="text" placeholder="Search Facebook">
             </div>
-          </div>
         </div>
+        <div class="nav-center">
+            <div class="nav-icon active"><ion-icon name="home"></ion-icon></div>
+            <div class="nav-icon"><ion-icon name="tv-outline"></ion-icon></div>
+            <div class="nav-icon"><ion-icon name="storefront-outline"></ion-icon></div>
+            <div class="nav-icon"><ion-icon name="people-circle-outline"></ion-icon></div>
+            <div class="nav-icon"><ion-icon name="game-controller-outline"></ion-icon></div>
+        </div>
+        <div class="nav-right">
+            <div class="profile-btn">
+                <img src="https://ui-avatars.com/api/?name=User&background=1877F2&color=fff" alt="Profile">
+            </div>
+            <div class="icon-btn"><ion-icon name="apps"></ion-icon></div>
+            <div class="icon-btn"><ion-icon name="chatbubble"></ion-icon></div>
+            <div class="icon-btn"><ion-icon name="notifications"></ion-icon></div>
+        </div>
+    </nav>
 
-        <!-- PHASE 2, 3, 4: THE REDESIGN -->
-        <div class="glass-panel mt-8">
-          <div class="panel-header">
-            <span class="phase-tag good">Phase 2: Prevention & Intention</span>
-            <h2>The "Forgiving" Redesign</h2>
-            <p>
-              Visual Distinction, spacing, and safeguards added. Try deleting
-              this post.
-            </p>
-          </div>
+    <!-- CONTENT LAYOUT -->
+    <div class="container">
+        <!-- LEFT SIDEBAR -->
+        <aside class="left-sidebar">
+            <div class="sidebar-item" id="nav-dashboard">
+                <img src="https://ui-avatars.com/api/?name=User&background=1877F2&color=fff" alt="Profile">
+                <span>User Name</span>
+            </div>
+            <div class="sidebar-item">
+                <ion-icon name="people" style="color: #1877F2;"></ion-icon>
+                <span>Friends</span>
+            </div>
+            <div class="sidebar-item">
+                <ion-icon name="bookmark" style="color: #b058d6;"></ion-icon>
+                <span>Saved</span>
+            </div>
+            <div class="sidebar-item">
+                <ion-icon name="time" style="color: #1877F2;"></ion-icon>
+                <span>Memories</span>
+            </div>
+            <div class="sidebar-divider"></div>
+            
+            <h3 class="sidebar-title">HCI Lab Objectives</h3>
+            <div class="sidebar-item" id="nav-trash">
+                <ion-icon name="trash" style="color: #E41E3F;"></ion-icon>
+                <span>Recently Deleted</span>
+                <div class="badge hidden" id="trash-badge">0</div>
+            </div>
+            <ul class="lab-goals">
+                <li><ion-icon name="eye-outline"></ion-icon> 1. Visual Distinction</li>
+                <li><ion-icon name="refresh-outline"></ion-icon> 2. Trash Buffer (Undo)</li>
+                <li><ion-icon name="alert-circle-outline"></ion-icon> 3. Forced Constraints</li>
+            </ul>
+        </aside>
 
-          <div id="good-post-container">
-            <div class="post-card good-card" id="good-post">
-              <div class="post-content">
-                <h3>Important Project Update</h3>
-                <p>Here are the latest statistics for our quarterly goals.</p>
-              </div>
-              <div class="good-actions">
-                <div class="safe-actions">
-                  <button class="btn-primary">
-                    <ion-icon name="create"></ion-icon> Edit Post
-                  </button>
-                  <button class="btn-secondary">
-                    <ion-icon name="bookmark"></ion-icon> Save Draft
-                  </button>
+        <!-- MAIN FEED -->
+        <main class="feed">
+            <!-- DASHBOARD VIEW -->
+            <div id="view-dashboard" class="view active">
+                
+                <!-- CREATE POST -->
+                <div class="create-post card">
+                    <div class="create-post-top">
+                        <img src="https://ui-avatars.com/api/?name=User&background=1877F2&color=fff" alt="Profile">
+                        <input type="text" id="post-input" placeholder="What's on your mind, User?" autocomplete="off">
+                    </div>
+                    <div class="create-post-bottom">
+                        <div class="action-btn">
+                            <ion-icon name="videocam" style="color: #E41E3F;"></ion-icon> Live Video
+                        </div>
+                        <div class="action-btn">
+                            <ion-icon name="images" style="color: #45BD62;"></ion-icon> Photo/video
+                        </div>
+                        <div class="action-btn">
+                            <ion-icon name="happy" style="color: #F7B928;"></ion-icon> Feeling/activity
+                        </div>
+                    </div>
+                    <div class="post-submit-container hidden" id="post-submit-container">
+                        <button class="btn-primary full-width" id="create-post-btn">Post</button>
+                    </div>
                 </div>
-                <!-- Phase 2: Visual Distinction (Spacing, Color, Icon) -->
-                <div class="danger-actions">
-                  <button class="btn-danger" id="init-delete-btn">
-                    <ion-icon name="trash"></ion-icon> Delete
-                  </button>
+
+                <!-- PHASE 1: BAD DESIGN POST -->
+                <div class="post card bad-design-post">
+                    <div class="lab-tag bad">Phase 1: Bad Design (Error-Prone)</div>
+                    <div class="post-header">
+                        <img src="https://ui-avatars.com/api/?name=Jane&background=E41E3F&color=fff" alt="Profile">
+                        <div class="post-info">
+                            <h4>Jane Doe</h4>
+                            <span>2 hrs · <ion-icon name="globe"></ion-icon></span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        Hey everyone! Just a reminder that our meeting is at 3 PM today. 📅 Don't miss it!
+                    </div>
+                    <div class="post-actions bad-actions">
+                        <button class="btn-bad"><ion-icon name="bookmark-outline"></ion-icon> Save</button>
+                        <button class="btn-bad"><ion-icon name="create-outline"></ion-icon> Edit</button>
+                        <button class="btn-bad" onclick="alert('Oops! You deleted this instantly by accident!')"><ion-icon name="close-outline"></ion-icon> Delete</button>
+                    </div>
+                    <div class="post-footer">
+                        <div class="footer-btn"><ion-icon name="thumbs-up-outline"></ion-icon> Like</div>
+                        <div class="footer-btn"><ion-icon name="chatbubble-outline"></ion-icon> Comment</div>
+                        <div class="footer-btn"><ion-icon name="arrow-redo-outline"></ion-icon> Share</div>
+                    </div>
                 </div>
-              </div>
+
+                <!-- POSTS CONTAINER (For generated Good Design posts) -->
+                <div id="posts-container">
+                    <!-- Default Good Post -->
+                    <div class="post card good-design-post" id="post-1">
+                        <div class="lab-tag good">Phase 2: Forgiving Redesign</div>
+                        <div class="post-header">
+                            <img src="https://ui-avatars.com/api/?name=User&background=1877F2&color=fff" alt="Profile">
+                            <div class="post-info">
+                                <h4>User Name</h4>
+                                <span>Just now · <ion-icon name="globe"></ion-icon></span>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            Finally finished up my HCI assignment! Learning a lot about forgiving UI and user constraints. 🧠✨ Feel free to try adding and deleting a post!
+                        </div>
+                        <!-- Phase 2: Visual Distinction -->
+                        <div class="post-actions good-actions">
+                            <div class="safe-actions">
+                                <button class="btn-safe"><ion-icon name="create"></ion-icon> Edit</button>
+                                <button class="btn-safe"><ion-icon name="bookmark"></ion-icon> Save</button>
+                            </div>
+                            <div class="danger-actions">
+                                <button class="btn-danger init-delete-btn" data-post-id="post-1"><ion-icon name="trash"></ion-icon> Delete</button>
+                            </div>
+                        </div>
+                        <div class="post-footer">
+                            <div class="footer-btn"><ion-icon name="thumbs-up-outline"></ion-icon> Like</div>
+                            <div class="footer-btn"><ion-icon name="chatbubble-outline"></ion-icon> Comment</div>
+                            <div class="footer-btn"><ion-icon name="arrow-redo-outline"></ion-icon> Share</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
 
-          <!-- Placeholder when good post is deleted -->
-          <div id="post-deleted-msg" class="empty-state hidden">
-            <ion-icon name="checkmark-circle"></ion-icon>
-            <h3>Post safely removed</h3>
-            <p>It has been moved to the Trash Can.</p>
-          </div>
-        </div>
-      </section>
+            <!-- TRASH VIEW -->
+            <div id="view-trash" class="view hidden">
+                <div class="card trash-header">
+                    <h2>Recently Deleted</h2>
+                    <p class="warning-text">Items in the Trash Can will be permanently deleted in <strong>30 days</strong>.</p>
+                    <div class="lab-tag recovery">Phase 3: Reversibility</div>
+                </div>
 
-      <!-- TRASH CAN VIEW -->
-      <section id="view-trash" class="view hidden">
-        <header>
-          <div class="header-with-tag">
-            <h1>Recently Deleted</h1>
-            <span class="phase-tag recovery">Phase 3: Reversibility</span>
-          </div>
-          <!-- Phase 3: Communication -->
-          <p class="warning-text">
-            Items in the Trash Can will be permanently deleted in
-            <strong>30 days</strong>.
-          </p>
-        </header>
-
-        <div class="glass-panel">
-          <div id="trash-list">
-            <!-- Javascript will populate this -->
-            <div class="empty-state">
-              <ion-icon name="folder-open"></ion-icon>
-              <h3>Trash is empty</h3>
-              <p>No recently deleted posts found.</p>
+                <div id="trash-list">
+                    <!-- Empty State will be generated by JS -->
+                </div>
             </div>
-          </div>
-        </div>
-      </section>
-    </main>
+        </main>
+
+        <!-- RIGHT SIDEBAR -->
+        <aside class="right-sidebar">
+            <h4>Sponsored</h4>
+            <div class="sponsored-item">
+                <div class="sponsored-img" style="background: url('https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&auto=format&fit=crop&q=60') center/cover; width: 100px; height: 100px; border-radius: 8px;"></div>
+                <div class="sponsored-text" style="display: flex; flex-direction: column; justify-content: center; gap: 4px; padding-left: 8px;">
+                    <strong style="font-size: 14px;">HCI Masterclass</strong>
+                    <span style="font-size: 12px; color: var(--fb-text-secondary);">Learn how to design forgiving interfaces.</span>
+                </div>
+            </div>
+            <div class="sidebar-divider"></div>
+            <h4>Contacts</h4>
+            <div class="contact-item sidebar-item">
+                <div class="contact-avatar"><img src="https://ui-avatars.com/api/?name=Alice&background=random&color=fff" alt="Friend"></div>
+                <span>Alice Smith</span>
+            </div>
+            <div class="contact-item sidebar-item">
+                <div class="contact-avatar"><img src="https://ui-avatars.com/api/?name=Bob&background=random&color=fff" alt="Friend"></div>
+                <span>Bob Johnson</span>
+            </div>
+        </aside>
+    </div>
 
     <!-- PHASE 4: THE CONTENT CONSTRAINT DIALOG (MODAL) -->
     <div class="modal-overlay hidden" id="delete-modal">
-      <div class="modal-content">
-        <div class="modal-icon">
-          <ion-icon name="warning"></ion-icon>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Move to Trash?</h2>
+                <div class="close-modal" id="close-modal-icon"><ion-icon name="close"></ion-icon></div>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this post? It will be moved to the Trash Can for 30 days before being permanently deleted.</p>
+                
+                <div class="constraint-container">
+                    <label for="delete-confirm-input">To confirm, please type <strong>DELETE</strong> below:</label>
+                    <input type="text" id="delete-confirm-input" placeholder="DELETE" autocomplete="off">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-safe" id="cancel-delete-btn">Cancel</button>
+                <button class="btn-danger-solid disabled" id="confirm-delete-btn" disabled>Move to Trash</button>
+            </div>
         </div>
-        <h2>Delete this post?</h2>
-        <p>
-          This post will be moved to the Trash Can. You can restore it anytime
-          within the next 30 days.
-        </p>
-
-        <div class="constraint-container">
-          <label for="delete-confirm-input"
-            >To confirm, type <strong>DELETE</strong> below:</label
-          >
-          <input
-            type="text"
-            id="delete-confirm-input"
-            placeholder="Type DELETE here..."
-            autocomplete="off"
-          />
-        </div>
-
-        <div class="modal-actions">
-          <button class="btn-secondary" id="cancel-delete-btn">Cancel</button>
-          <button
-            class="btn-danger-solid disabled"
-            id="confirm-delete-btn"
-            disabled
-          >
-            Move to Trash
-          </button>
-        </div>
-      </div>
     </div>
 
     <!-- Notification Toast -->
     <div id="toast" class="toast hidden">
-      <ion-icon name="information-circle"></ion-icon>
-      <span id="toast-msg">Action completed.</span>
+        <div class="toast-icon"><ion-icon name="information-circle"></ion-icon></div>
+        <div class="toast-content" id="toast-msg">Action completed.</div>
     </div>
 
     <script src="script.js"></script>
-  </body>
+</body>
 </html>
