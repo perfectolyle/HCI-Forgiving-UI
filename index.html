@@ -47,30 +47,34 @@
     <div class="container">
         <!-- LEFT SIDEBAR -->
         <aside class="left-sidebar">
-            <div class="sidebar-item" id="nav-dashboard">
+            <div class="sidebar-item">
                 <img src="https://ui-avatars.com/api/?name=User&background=1877F2&color=fff" alt="Profile">
                 <span>User Name</span>
             </div>
-            <div class="sidebar-item">
-                <ion-icon name="people" style="color: #1877F2;"></ion-icon>
-                <span>Friends</span>
-            </div>
-            <div class="sidebar-item">
-                <ion-icon name="bookmark" style="color: #b058d6;"></ion-icon>
-                <span>Saved</span>
-            </div>
-            <div class="sidebar-item">
-                <ion-icon name="time" style="color: #1877F2;"></ion-icon>
-                <span>Memories</span>
-            </div>
+            
             <div class="sidebar-divider"></div>
             
-            <h3 class="sidebar-title">HCI Lab Objectives</h3>
+            <h3 class="sidebar-title">HCI Lab Views</h3>
+            
+            <div class="sidebar-item" id="nav-phase1">
+                <ion-icon name="close-circle" style="color: #E41E3F;"></ion-icon>
+                <span>Phase 1: Bad Design</span>
+            </div>
+            
+            <div class="sidebar-item active-nav" id="nav-phase2" style="background-color: var(--fb-hover);">
+                <ion-icon name="checkmark-circle" style="color: #45BD62;"></ion-icon>
+                <span>Phase 2: Redesign</span>
+            </div>
+
             <div class="sidebar-item" id="nav-trash">
                 <ion-icon name="trash" style="color: #E41E3F;"></ion-icon>
                 <span>Recently Deleted</span>
                 <div class="badge hidden" id="trash-badge">0</div>
             </div>
+            
+            <div class="sidebar-divider"></div>
+
+            <h3 class="sidebar-title">Objectives</h3>
             <ul class="lab-goals">
                 <li><ion-icon name="eye-outline"></ion-icon> 1. Visual Distinction</li>
                 <li><ion-icon name="refresh-outline"></ion-icon> 2. Trash Buffer (Undo)</li>
@@ -80,32 +84,14 @@
 
         <!-- MAIN FEED -->
         <main class="feed">
-            <!-- DASHBOARD VIEW -->
-            <div id="view-dashboard" class="view active">
-                
-                <!-- CREATE POST -->
-                <div class="create-post card">
-                    <div class="create-post-top">
-                        <img src="https://ui-avatars.com/api/?name=User&background=1877F2&color=fff" alt="Profile">
-                        <input type="text" id="post-input" placeholder="What's on your mind, User?" autocomplete="off">
-                    </div>
-                    <div class="create-post-bottom">
-                        <div class="action-btn">
-                            <ion-icon name="videocam" style="color: #E41E3F;"></ion-icon> Live Video
-                        </div>
-                        <div class="action-btn">
-                            <ion-icon name="images" style="color: #45BD62;"></ion-icon> Photo/video
-                        </div>
-                        <div class="action-btn">
-                            <ion-icon name="happy" style="color: #F7B928;"></ion-icon> Feeling/activity
-                        </div>
-                    </div>
-                    <div class="post-submit-container hidden" id="post-submit-container">
-                        <button class="btn-primary full-width" id="create-post-btn">Post</button>
-                    </div>
+        
+            <!-- PHASE 1: BAD DESIGN VIEW -->
+            <div id="view-phase1" class="view hidden">
+                <div class="card splash-header">
+                    <h2 style="color: var(--fb-danger); margin-bottom: 8px;">Phase 1: Recognition</h2>
+                    <p style="color: var(--fb-text-secondary); font-size: 14px;">Observe the error-prone design below. Buttons are clustered, identically styled, and dangerous actions happen instantly without warning.</p>
                 </div>
-
-                <!-- PHASE 1: BAD DESIGN POST -->
+                
                 <div class="post card bad-design-post">
                     <div class="lab-tag bad">Phase 1: Bad Design (Error-Prone)</div>
                     <div class="post-header">
@@ -118,15 +104,55 @@
                     <div class="post-content">
                         Hey everyone! Just a reminder that our meeting is at 3 PM today. 📅 Don't miss it!
                     </div>
-                    <div class="post-actions bad-actions">
-                        <button class="btn-bad"><ion-icon name="bookmark-outline"></ion-icon> Save</button>
-                        <button class="btn-bad"><ion-icon name="create-outline"></ion-icon> Edit</button>
-                        <button class="btn-bad" onclick="alert('Oops! You deleted this instantly by accident!')"><ion-icon name="close-outline"></ion-icon> Delete</button>
+                    <div class="post-image">
+                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&auto=format&fit=crop&q=60" alt="Meeting">
                     </div>
+                    
+                    <div class="post-actions bad-actions">
+                        <button class="btn-bad" onclick="window.mockSave()"><ion-icon name="bookmark-outline"></ion-icon> Save</button>
+                        <button class="btn-bad" onclick="window.mockEdit()"><ion-icon name="create-outline"></ion-icon> Edit</button>
+                        <button class="btn-bad" onclick="window.mockBadDelete()"><ion-icon name="close-outline"></ion-icon> Delete</button>
+                    </div>
+                    
                     <div class="post-footer">
-                        <div class="footer-btn"><ion-icon name="thumbs-up-outline"></ion-icon> Like</div>
-                        <div class="footer-btn"><ion-icon name="chatbubble-outline"></ion-icon> Comment</div>
-                        <div class="footer-btn"><ion-icon name="arrow-redo-outline"></ion-icon> Share</div>
+                        <div class="footer-btn" onclick="window.mockLike()"><ion-icon name="thumbs-up-outline"></ion-icon> Like</div>
+                        <div class="footer-btn" onclick="window.mockComment()"><ion-icon name="chatbubble-outline"></ion-icon> Comment</div>
+                        <div class="footer-btn" onclick="window.mockShare()"><ion-icon name="arrow-redo-outline"></ion-icon> Share</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PHASE 2: REDESIGN VIEW -->
+            <div id="view-phase2" class="view active">
+                
+                <!-- CREATE POST -->
+                <div class="create-post card">
+                    <div class="create-post-top">
+                        <img src="https://ui-avatars.com/api/?name=User&background=1877F2&color=fff" alt="Profile">
+                        <input type="text" id="post-input" placeholder="What's on your mind, User?" autocomplete="off">
+                    </div>
+                    
+                    <!-- NEW: IMAGE UPLOAD PREVIEW -->
+                    <div id="image-preview-container" class="hidden">
+                        <img id="image-preview" src="" alt="Preview">
+                        <button id="remove-image-btn"><ion-icon name="close"></ion-icon></button>
+                    </div>
+
+                    <div class="create-post-bottom">
+                        <div class="action-btn" onclick="window.mockUnavailable('Live Video')">
+                            <ion-icon name="videocam" style="color: #E41E3F;"></ion-icon> Live Video
+                        </div>
+                        <div class="action-btn" id="photo-video-btn">
+                            <ion-icon name="images" style="color: #45BD62;"></ion-icon> Photo/video
+                            <input type="file" id="image-upload" accept="image/*" class="hidden">
+                        </div>
+                        <div class="action-btn" onclick="window.mockUnavailable('Feeling/activity')">
+                            <ion-icon name="happy" style="color: #F7B928;"></ion-icon> Feeling/activity
+                        </div>
+                    </div>
+                    
+                    <div class="post-submit-container hidden" id="post-submit-container">
+                        <button class="btn-primary full-width" id="create-post-btn">Post</button>
                     </div>
                 </div>
 
@@ -145,20 +171,24 @@
                         <div class="post-content">
                             Finally finished up my HCI assignment! Learning a lot about forgiving UI and user constraints. 🧠✨ Feel free to try adding and deleting a post!
                         </div>
+                        <div class="post-image">
+                            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=60" alt="Code">
+                        </div>
+
                         <!-- Phase 2: Visual Distinction -->
                         <div class="post-actions good-actions">
                             <div class="safe-actions">
-                                <button class="btn-safe"><ion-icon name="create"></ion-icon> Edit</button>
-                                <button class="btn-safe"><ion-icon name="bookmark"></ion-icon> Save</button>
+                                <button class="btn-safe" onclick="window.mockEdit()"><ion-icon name="create"></ion-icon> Edit</button>
+                                <button class="btn-safe" onclick="window.mockSave()"><ion-icon name="bookmark"></ion-icon> Save</button>
                             </div>
                             <div class="danger-actions">
                                 <button class="btn-danger init-delete-btn" data-post-id="post-1"><ion-icon name="trash"></ion-icon> Delete</button>
                             </div>
                         </div>
                         <div class="post-footer">
-                            <div class="footer-btn"><ion-icon name="thumbs-up-outline"></ion-icon> Like</div>
-                            <div class="footer-btn"><ion-icon name="chatbubble-outline"></ion-icon> Comment</div>
-                            <div class="footer-btn"><ion-icon name="arrow-redo-outline"></ion-icon> Share</div>
+                            <div class="footer-btn" onclick="window.mockLike()"><ion-icon name="thumbs-up-outline"></ion-icon> Like</div>
+                            <div class="footer-btn" onclick="window.mockComment()"><ion-icon name="chatbubble-outline"></ion-icon> Comment</div>
+                            <div class="footer-btn" onclick="window.mockShare()"><ion-icon name="arrow-redo-outline"></ion-icon> Share</div>
                         </div>
                     </div>
                 </div>
